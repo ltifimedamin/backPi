@@ -18,7 +18,7 @@ public class MedicamentController {
     MedicamentRepository medicamentRepository;
 
     @PostMapping("/add")
-    public Medicament ajouterFood(@RequestBody Medicament med){
+    public Medicament ajouterMedicament(@RequestBody Medicament med){
         Medicament p1=iServiceMedicament.addMed(med);
         return p1;
     }

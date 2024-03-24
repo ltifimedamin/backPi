@@ -1,7 +1,10 @@
 package com.example.carecareforeldres.RestController;
 
+import com.example.carecareforeldres.DTO.IngredientAvecMaladieDTO;
+import com.example.carecareforeldres.DTO.PlatWithIngredientsDTO;
 import com.example.carecareforeldres.Entity.Ingredient;
-import com.example.carecareforeldres.Repository.FoodReository;
+import com.example.carecareforeldres.Entity.Plat;
+import com.example.carecareforeldres.Repository.IngredientRepository;
 import com.example.carecareforeldres.Service.IServiceFood;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +13,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/food")
+@RequestMapping("/ingredient")
 @CrossOrigin("*")
 
 public class IngredientController {
 
     IServiceFood ServiceFood;
-    FoodReository foodReository;
+    IngredientRepository foodReository;
 
     @PostMapping("/add")
     public Ingredient ajouterFood(@RequestBody Ingredient food1){
@@ -24,7 +27,7 @@ public class IngredientController {
         return p1;
     }
 
-    @GetMapping("/retrive_all_food")
+    @GetMapping("/retrive_all_ingredient")
     public List<Ingredient> retrieveFoodList(){
 
         return ServiceFood.getAll();
@@ -47,7 +50,10 @@ public class IngredientController {
         ServiceFood.remove(foodId);
     }
 
-
+    @PostMapping("/addIngredientWithMaladie")
+    public Ingredient addPlatWithIngredients(@RequestBody IngredientAvecMaladieDTO platDTO) {
+        return ServiceFood.addIngredientDTO(platDTO);
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////

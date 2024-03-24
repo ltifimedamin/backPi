@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,15 +27,24 @@ public class Plat {
     private String nomPlat;
     private String descPlat;
     private float prixPlat;
-    private LocalDateTime datePlat;//date l'ajout plat délai
+    private String image;
+    private LocalDate datePlat;//date l'ajout plat délai
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Repas> repas;
 
     @Enumerated(EnumType.STRING)
     private List<TypePlat> typePlat;
 
-    @ManyToOne
-    Restaurant restaurant;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Restaurant restaurant;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plat")
-    @JsonIgnore
-    private Set<Ingredient> foods;
+
+
+    @ManyToMany
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Cuisinier cuisinier;
 }

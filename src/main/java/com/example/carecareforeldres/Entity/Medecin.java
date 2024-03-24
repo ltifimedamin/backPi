@@ -8,28 +8,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Maladie {
+public class Medecin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String nom;
-
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "maladies")
-    @JsonIgnore
-    private List<Ingredient> ingredients=new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Patient> patients=new ArrayList<>();
+    private Integer idMedecin;
 
 
 }

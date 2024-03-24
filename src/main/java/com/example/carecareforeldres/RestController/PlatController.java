@@ -1,13 +1,21 @@
 package com.example.carecareforeldres.RestController;
 
+import com.example.carecareforeldres.DTO.PlatWithIngredientsDTO;
+import com.example.carecareforeldres.Entity.Ingredient;
 import com.example.carecareforeldres.Entity.Plat;
 import com.example.carecareforeldres.Entity.Restaurant;
+import com.example.carecareforeldres.Repository.IngredientRepository;
 import com.example.carecareforeldres.Repository.PlatRepository;
 import com.example.carecareforeldres.Service.PlatService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
 @RestController
 @AllArgsConstructor
@@ -16,13 +24,15 @@ import java.util.List;
 public class PlatController {
     PlatService platService;
     PlatRepository platRepository;
+IngredientRepository ingredientRepository;
 
-
-    @PostMapping("/add")
+   /* @PostMapping("/add")
     public Plat ajouterPlat(@RequestBody Plat res){
+        Logger.getLogger("amin").warning("amin"+res.toString());
+
         Plat p1=platService.addPlat(res);
         return p1;
-    }
+    }*/
 
     @GetMapping("/retrive_all_plat")
     public List<Plat> retrievePlatList(){
@@ -45,6 +55,32 @@ public class PlatController {
     @DeleteMapping("/delete_plat/{platId}")
     public void deletePlat(@PathVariable("platId") Integer platId){
         platService.remove(platId);
+    }
+    /* @PostMapping("/addPlatWithIngredients")
+    public Plat addPlatWithIngredients(@RequestBody Plat plat) {
+        return platService.addPlatWithIngredients(plat);
+    }
+   @PostMapping("/aff")
+    public ResponseEntity<Plat> ajouterPlatAvecIngredients(@RequestBody Plat plat, @RequestBody List<Ingredient> ingredients) {
+        Plat nouveauPlat = platService.ajouterPlatAvecIngredients(plat, ingredients);
+        return new ResponseEntity<>(nouveauPlat, HttpStatus.CREATED);
+    }*/
+
+
+    @PostMapping("/add_plat/{idPatient}")
+    public Plat addPlat(@RequestBody Plat plat,@PathVariable("idPatient") Integer idPatient){
+       return platService.addPlatPatient(plat,idPatient);
+    }
+
+    @PostMapping("/test/{idPatient}")
+    public Boolean test(@RequestBody Plat plat,@PathVariable("idPatient") Integer idPatient){
+        return platService.testMaladie(plat,idPatient);
+    }
+
+
+    @PostMapping("/addPlatWithIngredients")
+    public Plat addPlatWithIngredients(@RequestBody PlatWithIngredientsDTO platDTO) {
+        return platService.addPlatDTO(platDTO);
     }
 
 
